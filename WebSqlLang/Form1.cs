@@ -19,7 +19,7 @@ namespace WebSqlLang
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+            //Add some code here
         }
     }
 }
