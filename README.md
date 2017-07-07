@@ -8,11 +8,26 @@ Example 1:
 SELECT [ALL] using HEADERS FROM http://google.com 
 
 ```
+## Output 1:
+
+```
+NAME            VALUE
+host            google.com
+cookie          ""
+
+```
+
 ### This will select 2 columns url and text of <a> tag for all urls found on a page
 
 ```
-Example 2:
 
-SELECT [url, name] using LINKS FROM http://google.com 
+SELECT [URL, NAME] using LINKS FROM http://google.com 
+
+```
+## Output 1:
+
+```
+URL             NAME
+goolge.com      goolge
 
 ```
