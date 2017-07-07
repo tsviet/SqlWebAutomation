@@ -39,4 +39,4 @@ goolge.com      goolge
 
 ```
 #MockUpUI:
-![alt text](http://url/to/img.png)
+![alt text](https://github.com/tsviet/WebSqlLang/blob/master/MockupUI.png)
