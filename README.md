@@ -39,6 +39,5 @@ goolge.com      goolge
 
 ```
 ## MockUpUI:
-```
+
 ![alt text](https://github.com/tsviet/WebSqlLang/blob/master/MockupUI.png)
-```
