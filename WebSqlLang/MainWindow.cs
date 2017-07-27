@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace WebSqlLang
 {
-    public partial class Form1 : Form
+    public partial class MainWindow : Form
     {
-        public Form1()
+        public MainWindow()
         {
             InitializeComponent();
         }
@@ -20,6 +20,11 @@ namespace WebSqlLang
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             //Add some code here
+        }
+
+        private void csvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
