@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace WebSqlLang.LanguageImplementation
 {
-    public static class InputContainer
+    public class InputContainer
     {
-        public static string Url { get; set; }
-        public static string Using { get; set; }
-        public static List<string> Fields { get; set; }
+        private string Url { get; set; }
+        private string Using { get; set; }
+        private List<string> Fields { get; set; }
               
     }
 }

@@ -8,11 +8,15 @@ namespace WebSqlLang.LanguageImplementation
 {
     public static class Tokenizer
     {
-        public static void Parse(string formInput)
+        public static InputContainer Parse(string formInput)
         {
-            //throw new NotImplementedException();
-        }
+            var container = new InputContainer();
 
+
+
+            return container;
+        }
+        
         public static bool IsTokenizeble(string formInput)
         {
             if (string.IsNullOrEmpty(formInput)) return false;

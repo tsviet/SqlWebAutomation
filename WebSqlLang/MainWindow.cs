@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WebSqlLang.LanguageImplementation;
 
 namespace WebSqlLang
 {
@@ -55,9 +56,17 @@ namespace WebSqlLang
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+            // Main function that will start interpretation of input text and shoving results to a table.
             var programText = textBox1.Text;
             var grid = new DataGridView();
-            
+
+            var container = new InputContainer();
+            if (Tokenizer.IsTokenizeble(programText))
+            {
+                container = Tokenizer.Parse(programText);
+            }
+
             DataTable table = new DataTable();
             table.Columns.Add("Name");
             table.Rows.Add(programText);
@@ -66,8 +75,7 @@ namespace WebSqlLang
             grid.BackgroundColor = Color.White;
             grid.AutoSize = true;
 
-            tabControl1.TabPages[0].Controls.Add(grid);
-            //tabControl1.SelectedTab.Text = programText;
+            tabControl1.TabPages[0].Controls.Add(grid);            
 
             grid.AutoResizeColumns();
 
