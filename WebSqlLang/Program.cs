@@ -30,14 +30,14 @@ namespace WebSqlLang
         {
             var formInput = "SELECT * USING HEADERS FROM https://wwww.google.com";
             //Check if string has required minimum text to be albe to do somthing
-            if (Tokenizer.isTokenizeble(formInput))
+            if (Tokenizer.IsTokenizeble(formInput))
             {
                 Tokenizer.Parse(formInput);
             }
 
             //TODO: FILL in this oject dynamically
             InputContainer.Url = "https://wwww.google.com";
-            InputContainer.Fields.Add("*");
+            InputContainer.Fields = new List<string> {"*"};
             InputContainer.Using = "HEADERS";
 
 

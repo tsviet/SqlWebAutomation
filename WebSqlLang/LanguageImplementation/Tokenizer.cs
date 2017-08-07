@@ -10,10 +10,10 @@ namespace WebSqlLang.LanguageImplementation
     {
         public static void Parse(string formInput)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public static bool isTokenizeble(string formInput)
+        public static bool IsTokenizeble(string formInput)
         {
             if (string.IsNullOrEmpty(formInput)) return false;
             if (!formInput.ToUpper().StartsWith("SELECT")) return false;
