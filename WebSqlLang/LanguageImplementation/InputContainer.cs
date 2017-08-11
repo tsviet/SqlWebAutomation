@@ -10,10 +10,16 @@ namespace WebSqlLang.LanguageImplementation
 {
     public class InputContainer
     {
+
+        public InputContainer()
+        {
+            Url = "";
+            ColumnsMap = new Dictionary<string, List<string>>();
+            Errors = new List<string>();
+        }
         public string Url { get; set; }
-        public Dictionary<string, List<string>> Using { get; set; }
-        public List<string> Fields { get; set; }
-        public List<string> errors { get; set; }
+        public Dictionary<string, List<string>> ColumnsMap { get; set; }
+        public List<string> Errors { get; set; }
 
     }
 }
