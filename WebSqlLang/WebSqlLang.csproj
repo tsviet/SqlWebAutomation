@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LanguageImplementation\InputValidator.cs" />
+    <Compile Include="LanguageImplementation\WebRequest.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
