@@ -1,4 +1,5 @@
-﻿namespace WebSqlLang
+﻿/* Copyright © 2017 Mykhailo Tsvietukhin. This program is released under the "GPL-3.0" lisense. Please see LICENSE for license terms. */
+namespace WebSqlLang
 {
     partial class MainWindow
     {

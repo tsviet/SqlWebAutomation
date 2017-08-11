@@ -1,7 +1,10 @@
-﻿using System;
+﻿/* Copyright © 2017 Mykhailo Tsvietukhin. This program is released under the "GPL-3.0" lisense. Please see LICENSE for license terms. */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace WebSqlLang.LanguageImplementation
@@ -12,7 +15,7 @@ namespace WebSqlLang.LanguageImplementation
         {
             var container = new InputContainer();
 
-
+            Regex.Match(formInput, "select (.+?) HEA")
 
             return container;
         }
