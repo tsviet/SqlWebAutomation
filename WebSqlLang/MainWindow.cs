@@ -67,6 +67,9 @@ namespace WebSqlLang
             if (Tokenizer.IsTokenizeble(programText))
             {
                 container = Tokenizer.Parse(programText);
+                var web = new WebRequest(container);
+                web.GetHtml();
+                var s = web.Html;
             }
 
             DataTable table = new DataTable();

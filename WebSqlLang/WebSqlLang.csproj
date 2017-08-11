@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.5.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.5.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,7 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LanguageImplementation\Headers.cs" />
+    <Compile Include="LanguageImplementation\HtmlHelper.cs" />
+    <Compile Include="LanguageImplementation\IData.cs" />
     <Compile Include="LanguageImplementation\InputValidator.cs" />
+    <Compile Include="LanguageImplementation\Links.cs" />
+    <Compile Include="LanguageImplementation\Tables.cs" />
     <Compile Include="LanguageImplementation\WebRequest.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -71,6 +80,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

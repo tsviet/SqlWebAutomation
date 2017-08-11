@@ -11,30 +11,43 @@ namespace WebSqlLang.LanguageImplementation
 {
     public class WebRequest
     {
-        private string userAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1";
+        private readonly string _userAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1";
         private readonly InputContainer container = null;
-        private readonly Uri inputUrl;
-        public string html { get; private set; }
+        private readonly Uri _inputUrl;
+        private string _html = "";
+        public string Html {
+            get { return _html; }
+            private set
+            {
+                _html = value;
+                //On value change call parser to get proper data
+                if (!string.IsNullOrWhiteSpace(value) && !string.IsNullOrEmpty(value))
+                {
+                    HtmlHelper.Parse(container, value);
+                }
+            }
+        }
 
         public WebRequest(InputContainer container)
         {
             this.container = container;
-            inputUrl = new Uri(this.container.Url);
+            _inputUrl = new Uri(this.container.Url);
         }
 
         public void GetHtml()
         {
+            //Getting some code from here https://stackoverflow.com/questions/7129256/how-to-use-string-in-webclient-downloadstringasync-url (keyboardP)
             using (var webClient = new WebClient())
             {
-                webClient.Headers["User-Agent"] = userAgent;
-                webClient.DownloadStringCompleted += wc_DownloadStringCompleted;
-                webClient.DownloadStringAsync(inputUrl);
+                webClient.Headers["User-Agent"] = _userAgent;
+                webClient.DownloadStringCompleted += new DownloadStringCompletedEventHandler(wc_DownloadStringCompleted).Invoke;
+                webClient.DownloadStringAsync(_inputUrl);
             }
         }
 
         private void wc_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
-            html = e.Result;
+            Html = e.Result;
         }
     }
 }
