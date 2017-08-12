@@ -23,11 +23,18 @@ namespace WebSqlLang
         {
             InitializeComponent();
             folderBrowserDialog1.RootFolder = Environment.SpecialFolder.Desktop;
-        }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            //Add some code here
+            var box = new TextBox
+            {
+                Multiline = true,
+                Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, ((byte) (0))),
+                Text = "SELECT [URL, NAME] using LINKS FROM https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page"
+            };
+
+            mainInputTabControl.TabPages[0].Controls.Add(box);
+
+            box.Height = box.Parent.Bottom;
+            box.Width = box.Parent.Width;
         }
 
         private void csvToolStripMenuItem_Click(object sender, EventArgs e)
@@ -40,31 +47,14 @@ namespace WebSqlLang
 
         }
 
-        // From https://stackoverflow.com/questions/6239544/populate-treeview-with-file-system-directory-structure
-
-        private void ListDirectory(TreeView treeView, string path)
-        {
-            treeView.Nodes.Clear();
-            var rootDirectoryInfo = new DirectoryInfo(path);
-            treeView.Nodes.Add(CreateDirectoryNode(rootDirectoryInfo));
-        }
-
-        private static TreeNode CreateDirectoryNode(DirectoryInfo directoryInfo)
-        {
-            var directoryNode = new TreeNode(directoryInfo.Name);
-            foreach (var directory in directoryInfo.GetDirectories())
-                directoryNode.Nodes.Add(CreateDirectoryNode(directory));
-            foreach (var file in directoryInfo.GetFiles())
-                directoryNode.Nodes.Add(new TreeNode(file.Name));
-            return directoryNode;
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
+            tabControl1.TabPages[0].Controls.Clear();
+
             DataCollected = new List<IData>();
             var table = new DataTable();
             // Main function that will start interpretation of input text and shoving results to a table.
-            var programText = textBox1.Text;
+            var programText = mainInputTabControl.SelectedTab.Controls[0] as TextBox;
 
             //Generate output grid
             var grid = new DataGridView
@@ -76,10 +66,10 @@ namespace WebSqlLang
             };
 
             List<IData> finalData = null;
-            var container = new InputContainer();
-            if (Tokenizer.IsTokenizeble(programText))
+            InputContainer container;
+            if (Tokenizer.IsTokenizeble(programText?.Text))
             {
-                container = Tokenizer.Parse(programText);
+                container = Tokenizer.Parse(programText?.Text);
                 var web = new WebRequest(container);
                 web.GetHtml();
                 web.PropertyChanged += (sender1, e1) =>
@@ -90,7 +80,7 @@ namespace WebSqlLang
                         case "Html":
                             var html = (sender1 as WebRequest)?.Html;
                             finalData = HtmlHelper.Parse(container, html);
-                            UpdateTableAndGrid(finalData, table, container, grid);
+                            UpdateTableAndGrid(finalData, container, grid);
                             break;
                     }
                 };
@@ -106,29 +96,59 @@ namespace WebSqlLang
             }
         }
 
-        public DataTable ConvertToDataTable<T>(IList<T> data)
+        public DataTable ConvertToDataTable<T>(IList<T> data, InputContainer container)
         {
+            //https://stackoverflow.com/questions/29898412/convert-listt-to-datatable-including-t-customclass-properties
             var properties = TypeDescriptor.GetProperties(typeof(T));
             var table1 = new DataTable();
+            if (container.ColumnsMap.FirstOrDefault().Value.Contains("*"))
+            {
+                foreach (PropertyDescriptor prop in properties)
+                {
+                    table1.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                }
+            }
             foreach (PropertyDescriptor prop in properties)
-                table1.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            {
+                //Will work only for sinle method in query will need to be rebuilded when JOIN will be designed
+                if (container.ColumnsMap.FirstOrDefault().Value.Contains(prop.Name.ToLower()))
+                {
+                    table1.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                }
+            }
+            if (container.ColumnsMap.FirstOrDefault().Value.Contains("*"))
+            {
+                foreach (var item in data)
+                {
+                    var row = table1.NewRow();
+                    foreach (PropertyDescriptor prop in properties)
+                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                    table1.Rows.Add(row);
+                }
+            }
+
             foreach (var item in data)
             {
                 var row = table1.NewRow();
                 foreach (PropertyDescriptor prop in properties)
-                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                {
+                    if (container.ColumnsMap.FirstOrDefault().Value.Contains(prop.Name.ToLower()))
+                    {
+                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                    }
+                }
                 table1.Rows.Add(row);
             }
             return table1;
 
         }
 
-        private void UpdateTableAndGrid(List<IData> finalData, DataTable table, InputContainer container, DataGridView grid)
+        private void UpdateTableAndGrid(List<IData> finalData, InputContainer container, DataGridView grid)
         {
             try
             {
                 var convertedList = finalData.ConvertAll(x => (Links)x);
-                var resultTable = ConvertToDataTable(convertedList);
+                var resultTable = ConvertToDataTable(convertedList, container);
 
                 grid.DataSource = resultTable;
                 tabControl1.TabPages[0].VerticalScroll.Enabled = true;

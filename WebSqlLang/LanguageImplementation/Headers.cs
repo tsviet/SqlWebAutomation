@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebSqlLang.LanguageImplementation
 {
-    class Headers : IData
+    public class Headers : IData
     {
     }
 }

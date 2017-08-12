@@ -29,7 +29,7 @@ namespace WebSqlLang
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Node0");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Node0");
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,8 +48,6 @@ namespace WebSqlLang
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.docsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -57,8 +55,11 @@ namespace WebSqlLang
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
+            this.mainInputTabControl = new System.Windows.Forms.TabControl();
+            this.baseInputTabPage = new System.Windows.Forms.TabPage();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.mainInputTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -92,13 +93,13 @@ namespace WebSqlLang
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadToolStripMenuItem.Text = "Load";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveAsToolStripMenuItem
@@ -108,7 +109,7 @@ namespace WebSqlLang
             this.csvToolStripMenuItem,
             this.dataBaseToolStripMenuItem});
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveAsToolStripMenuItem.Text = "Save as ...";
             // 
             // textToolStripMenuItem
@@ -133,7 +134,7 @@ namespace WebSqlLang
             // recentFilesToolStripMenuItem
             // 
             this.recentFilesToolStripMenuItem.Name = "recentFilesToolStripMenuItem";
-            this.recentFilesToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.recentFilesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.recentFilesToolStripMenuItem.Text = "Recent files...";
             // 
             // editToolStripMenuItem
@@ -197,32 +198,14 @@ namespace WebSqlLang
             this.docsToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
             this.docsToolStripMenuItem.Text = "docs";
             // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(211, 46);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(1168, 334);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "SELECT [URL, NAME] using LINKS FROM https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page";
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
-            // 
-            // vScrollBar1
-            // 
-            this.vScrollBar1.Location = new System.Drawing.Point(1358, 46);
-            this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(21, 334);
-            this.vScrollBar1.TabIndex = 3;
-            // 
             // treeView1
             // 
             this.treeView1.Location = new System.Drawing.Point(0, 46);
             this.treeView1.Name = "treeView1";
-            treeNode2.Name = "Node0";
-            treeNode2.Text = "Node0";
+            treeNode3.Name = "Node0";
+            treeNode3.Text = "Node0";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode3});
             this.treeView1.Size = new System.Drawing.Size(205, 334);
             this.treeView1.TabIndex = 4;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -238,7 +221,6 @@ namespace WebSqlLang
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            //this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 386);
             this.tabControl1.Name = "tabControl1";
@@ -248,25 +230,21 @@ namespace WebSqlLang
             // 
             // tabPage1
             // 
+            this.tabPage1.AutoScroll = true;
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(1371, 307);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Output 1";
-            this.tabPage1.AutoScroll = true;
-            this.tabPage1.UseVisualStyleBackColor = true;            
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            /*// tabPage2
+            // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Location = new System.Drawing.Point(0, 0);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1371, 307);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Output 2";
-            this.tabPage1.AutoScroll = true;
-            this.tabPage2.UseVisualStyleBackColor = true;*/
+            this.tabPage2.Size = new System.Drawing.Size(200, 100);
+            this.tabPage2.TabIndex = 0;
             // 
             // button1
             // 
@@ -281,17 +259,37 @@ namespace WebSqlLang
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // mainInputTabControl
+            // 
+            this.mainInputTabControl.Controls.Add(this.baseInputTabPage);
+            this.mainInputTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mainInputTabControl.Location = new System.Drawing.Point(211, 46);
+            this.mainInputTabControl.Name = "mainInputTabControl";
+            this.mainInputTabControl.SelectedIndex = 0;
+            this.mainInputTabControl.Size = new System.Drawing.Size(1168, 336);
+            this.mainInputTabControl.TabIndex = 8;
+            // 
+            // baseInputTabPage
+            // 
+            this.baseInputTabPage.AutoScroll = true;
+            this.baseInputTabPage.Location = new System.Drawing.Point(4, 29);
+            this.baseInputTabPage.Name = "baseInputTabPage";
+            this.baseInputTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.baseInputTabPage.Size = new System.Drawing.Size(1160, 303);
+            this.baseInputTabPage.TabIndex = 0;
+            this.baseInputTabPage.Text = "Program1";
+            this.baseInputTabPage.UseVisualStyleBackColor = true;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1379, 751);
+            this.Controls.Add(this.mainInputTabControl);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.treeView1);
-            this.Controls.Add(this.vScrollBar1);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
@@ -299,6 +297,7 @@ namespace WebSqlLang
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.mainInputTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -323,8 +322,6 @@ namespace WebSqlLang
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem docsToolStripMenuItem;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.VScrollBar vScrollBar1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.StatusStrip statusStrip1;
@@ -332,6 +329,8 @@ namespace WebSqlLang
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabControl mainInputTabControl;
+        private System.Windows.Forms.TabPage baseInputTabPage;
     }
 }
 

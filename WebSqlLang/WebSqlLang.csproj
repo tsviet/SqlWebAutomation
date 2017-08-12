@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LanguageImplementation\Directory.cs" />
     <Compile Include="LanguageImplementation\Headers.cs" />
     <Compile Include="LanguageImplementation\HtmlHelper.cs" />
     <Compile Include="LanguageImplementation\IData.cs" />

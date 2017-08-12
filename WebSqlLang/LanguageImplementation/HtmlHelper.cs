@@ -62,14 +62,17 @@ namespace WebSqlLang.LanguageImplementation
             foreach (var result in aTagResults)
             {
                 var urlWithOutDomain = result.Attributes[param]?.Value;
-                var currentLinkObject = new Links
+                if (!string.IsNullOrEmpty(urlWithOutDomain))
                 {
-                    RowNumber = ++count,
-                    Url = urlWithOutDomain != null && !urlWithOutDomain.StartsWith("http") ? $"{shemeUrl}://{domainUrl}{urlWithOutDomain}" : urlWithOutDomain,
-                    Name = Regex.Replace(result.InnerText.Trim(), "\\s\\s+", ""),
-                    Type = result.Attributes["type"]?.Value,
-                };
-                list.Add(currentLinkObject);
+                    var currentLinkObject = new Links
+                    {
+                        RowNumber = ++count,
+                        Url = !urlWithOutDomain.StartsWith("http") ? $"{shemeUrl}://{domainUrl}{urlWithOutDomain}" : urlWithOutDomain,
+                        Name = Regex.Replace(result.InnerText.Trim(), "\\s\\s+", ""),
+                        Type = result.Attributes["type"]?.Value,
+                    };
+                    list.Add(currentLinkObject);
+                }
             }
         }
     }
