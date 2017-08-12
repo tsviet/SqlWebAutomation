@@ -113,29 +113,22 @@ namespace WebSqlLang
                 //Will work only for sinle method in query will need to be rebuilded when JOIN will be designed
                 if (container.ColumnsMap.FirstOrDefault().Value.Contains(prop.Name.ToLower()))
                 {
-                    table1.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-                }
-            }
-            if (container.ColumnsMap.FirstOrDefault().Value.Contains("*"))
-            {
-                foreach (var item in data)
-                {
-                    var row = table1.NewRow();
-                    foreach (PropertyDescriptor prop in properties)
-                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
-                    table1.Rows.Add(row);
+                    var name = prop.Name;
+                    if (table1.Columns.Contains(prop.Name))
+                    {
+                        name = prop.Name + "_1";
+                    }
+                    table1.Columns.Add(name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
                 }
             }
 
             foreach (var item in data)
             {
                 var row = table1.NewRow();
-                foreach (PropertyDescriptor prop in properties)
+                foreach (DataColumn column in table1.Columns)
                 {
-                    if (container.ColumnsMap.FirstOrDefault().Value.Contains(prop.Name.ToLower()))
-                    {
-                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
-                    }
+                    var prop = properties.Find(column.ColumnName.Replace("_1", ""), false);
+                    row[column.ColumnName] = prop.GetValue(item) ?? DBNull.Value;
                 }
                 table1.Rows.Add(row);
             }
