@@ -1,6 +1,7 @@
 ﻿/* Copyright © 2017 Mykhailo Tsvietukhin. This program is released under the "GPL-3.0" lisense. Please see LICENSE for license terms. */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -9,7 +10,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace WebSqlLang.LanguageImplementation
 {
-    public class WebRequest
+    public class WebRequest : INotifyPropertyChanged
     {
         private readonly string _userAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1";
         private readonly InputContainer container = null;
@@ -21,10 +22,12 @@ namespace WebSqlLang.LanguageImplementation
             {
                 _html = value;
                 //On value change call parser to get proper data
-                if (!string.IsNullOrWhiteSpace(value) && !string.IsNullOrEmpty(value))
-                {
-                    HtmlHelper.Parse(container, value);
-                }
+
+                OnPropertyChanged("Html");
+                //if (!string.IsNullOrWhiteSpace(value) && !string.IsNullOrEmpty(value))
+                //{
+                //HtmlHelper.Parse(container, value);
+                //}
             }
         }
 
@@ -48,6 +51,13 @@ namespace WebSqlLang.LanguageImplementation
         private void wc_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             Html = e.Result;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

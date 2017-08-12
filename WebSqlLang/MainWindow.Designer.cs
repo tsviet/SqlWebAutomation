@@ -205,7 +205,7 @@ namespace WebSqlLang
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(1168, 334);
             this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "SELECT [URL, NAME] using LINKS FROM https://stackoverflow.com ";
+            this.textBox1.Text = "SELECT [URL, NAME] using LINKS FROM https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
             // vScrollBar1
@@ -238,7 +238,7 @@ namespace WebSqlLang
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            //this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 386);
             this.tabControl1.Name = "tabControl1";
@@ -254,9 +254,10 @@ namespace WebSqlLang
             this.tabPage1.Size = new System.Drawing.Size(1371, 307);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Output 1";
+            this.tabPage1.AutoScroll = true;
             this.tabPage1.UseVisualStyleBackColor = true;            
             // 
-            // tabPage2
+            /*// tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
@@ -264,7 +265,8 @@ namespace WebSqlLang
             this.tabPage2.Size = new System.Drawing.Size(1371, 307);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Output 2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPage1.AutoScroll = true;
+            this.tabPage2.UseVisualStyleBackColor = true;*/
             // 
             // button1
             // 
