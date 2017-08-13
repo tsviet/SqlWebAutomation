@@ -52,6 +52,11 @@ namespace WebSqlLang
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Run();
+        }
+
+        private void Run()
+        {
             tabControl1.TabPages[0].Controls.Clear();
 
             DataCollected = new List<IData>();
@@ -66,7 +71,6 @@ namespace WebSqlLang
                 AutoSize = true,
                 ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize,
                 AutoSizeColumnsMode = (DataGridViewAutoSizeColumnsMode) DataGridViewAutoSizeColumnMode.AllCells
-
             };
 
             List<IData> finalData = null;
@@ -268,6 +272,19 @@ namespace WebSqlLang
             {
                 SaveCurrentWindow();
             }
+            if (e.KeyCode == Keys.F5)
+            {
+                Run();
+            }
+        }
+
+        private void runToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Run();
+        }
+
+        private void menuStrip1_KeyDown(object sender, KeyEventArgs e)
+        {
         }
     }
 }

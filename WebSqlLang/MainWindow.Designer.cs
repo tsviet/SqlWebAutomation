@@ -75,6 +75,7 @@ namespace WebSqlLang
             this.menuStrip1.Size = new System.Drawing.Size(1379, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.menuStrip1_KeyDown);
             // 
             // fileToolStripMenuItem
             // 
@@ -138,8 +139,9 @@ namespace WebSqlLang
             // runToolStripMenuItem1
             // 
             this.runToolStripMenuItem1.Name = "runToolStripMenuItem1";
-            this.runToolStripMenuItem1.Size = new System.Drawing.Size(95, 22);
-            this.runToolStripMenuItem1.Text = "Run";
+            this.runToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.runToolStripMenuItem1.Text = "Run - F5";
+            this.runToolStripMenuItem1.Click += new System.EventHandler(this.runToolStripMenuItem1_Click);
             // 
             // aboutToolStripMenuItem
             // 
