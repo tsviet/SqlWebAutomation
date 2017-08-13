@@ -29,15 +29,12 @@ namespace WebSqlLang
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Node0");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node0");
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.textToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.csvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataBaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recentFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,6 +54,7 @@ namespace WebSqlLang
             this.button1 = new System.Windows.Forms.Button();
             this.mainInputTabControl = new System.Windows.Forms.TabControl();
             this.baseInputTabPage = new System.Windows.Forms.TabPage();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.mainInputTabControl.SuspendLayout();
@@ -101,35 +99,14 @@ namespace WebSqlLang
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
-            this.saveAsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.textToolStripMenuItem,
-            this.csvToolStripMenuItem,
-            this.dataBaseToolStripMenuItem});
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveAsToolStripMenuItem.Text = "Save as ...";
-            // 
-            // textToolStripMenuItem
-            // 
-            this.textToolStripMenuItem.Name = "textToolStripMenuItem";
-            this.textToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
-            this.textToolStripMenuItem.Text = "text";
-            // 
-            // csvToolStripMenuItem
-            // 
-            this.csvToolStripMenuItem.Name = "csvToolStripMenuItem";
-            this.csvToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
-            this.csvToolStripMenuItem.Text = "csv";
-            this.csvToolStripMenuItem.Click += new System.EventHandler(this.csvToolStripMenuItem_Click);
-            // 
-            // dataBaseToolStripMenuItem
-            // 
-            this.dataBaseToolStripMenuItem.Name = "dataBaseToolStripMenuItem";
-            this.dataBaseToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
-            this.dataBaseToolStripMenuItem.Text = "Data base";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // recentFilesToolStripMenuItem
             // 
@@ -202,10 +179,10 @@ namespace WebSqlLang
             // 
             this.treeView1.Location = new System.Drawing.Point(0, 46);
             this.treeView1.Name = "treeView1";
-            treeNode3.Name = "Node0";
-            treeNode3.Text = "Node0";
+            treeNode1.Name = "Node0";
+            treeNode1.Text = "Node0";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
+            treeNode1});
             this.treeView1.Size = new System.Drawing.Size(205, 334);
             this.treeView1.TabIndex = 4;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -280,6 +257,12 @@ namespace WebSqlLang
             this.baseInputTabPage.Text = "Program1";
             this.baseInputTabPage.UseVisualStyleBackColor = true;
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "wslang";
+            this.saveFileDialog1.FileName = "*";
+            this.saveFileDialog1.Filter = "All|*|Web Sql Language|*.wslang";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -293,7 +276,7 @@ namespace WebSqlLang
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
-            this.Text = "Form1";
+            this.Text = "WebSqlLang";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -309,9 +292,6 @@ namespace WebSqlLang
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem textToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem csvToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dataBaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem recentFilesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
@@ -331,6 +311,7 @@ namespace WebSqlLang
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TabControl mainInputTabControl;
         private System.Windows.Forms.TabPage baseInputTabPage;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

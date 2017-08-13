@@ -19,6 +19,7 @@ namespace WebSqlLang
     {
 
         public List<IData> DataCollected = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -28,7 +29,7 @@ namespace WebSqlLang
             {
                 Multiline = true,
                 Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, ((byte) (0))),
-                Text = "SELECT [URL, NAME] using LINKS FROM https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page"
+                Text = @"SELECT [URL, NAME] using LINKS FROM https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page"
             };
 
             mainInputTabControl.TabPages[0].Controls.Add(box);
@@ -61,6 +62,7 @@ namespace WebSqlLang
             {
                 BackgroundColor = Color.White,
                 AutoSize = true,
+                ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize,
                 AutoSizeColumnsMode = (DataGridViewAutoSizeColumnsMode) DataGridViewAutoSizeColumnMode.AllCells
 
             };
@@ -100,12 +102,12 @@ namespace WebSqlLang
         {
             //https://stackoverflow.com/questions/29898412/convert-listt-to-datatable-including-t-customclass-properties
             var properties = TypeDescriptor.GetProperties(typeof(T));
-            var table1 = new DataTable();
+            var outputTable = new DataTable();
             if (container.ColumnsMap.FirstOrDefault().Value.Contains("*"))
             {
                 foreach (PropertyDescriptor prop in properties)
                 {
-                    table1.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                    outputTable.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
                 }
             }
             foreach (PropertyDescriptor prop in properties)
@@ -114,25 +116,25 @@ namespace WebSqlLang
                 if (container.ColumnsMap.FirstOrDefault().Value.Contains(prop.Name.ToLower()))
                 {
                     var name = prop.Name;
-                    if (table1.Columns.Contains(prop.Name))
+                    if (outputTable.Columns.Contains(prop.Name))
                     {
                         name = prop.Name + "_1";
                     }
-                    table1.Columns.Add(name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                    outputTable.Columns.Add(name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
                 }
             }
 
             foreach (var item in data)
             {
-                var row = table1.NewRow();
-                foreach (DataColumn column in table1.Columns)
+                var row = outputTable.NewRow();
+                foreach (DataColumn column in outputTable.Columns)
                 {
                     var prop = properties.Find(column.ColumnName.Replace("_1", ""), false);
                     row[column.ColumnName] = prop.GetValue(item) ?? DBNull.Value;
                 }
-                table1.Rows.Add(row);
+                outputTable.Rows.Add(row);
             }
-            return table1;
+            return outputTable;
 
         }
 
@@ -140,7 +142,7 @@ namespace WebSqlLang
         {
             try
             {
-                var convertedList = finalData.ConvertAll(x => (Links)x);
+                var convertedList = finalData.ConvertAll(x => (Links) x);
                 var resultTable = ConvertToDataTable(convertedList, container);
 
                 grid.DataSource = resultTable;
@@ -157,6 +159,25 @@ namespace WebSqlLang
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            //https://www.dotnetperls.com/savefiledialog
+
+            var name = saveFileDialog1.FileName;
+            File.WriteAllText(name, baseInputTabPage.Text);
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //TODO: Add save to current file if exist or call savedialog
+            
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.ShowDialog();
         }
     }
 }
