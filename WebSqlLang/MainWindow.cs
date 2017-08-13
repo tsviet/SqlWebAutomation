@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -160,15 +161,7 @@ namespace WebSqlLang
         {
 
         }
-
-        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
-            //https://www.dotnetperls.com/savefiledialog
-
-            var name = saveFileDialog1.FileName;
-            File.WriteAllText(name, baseInputTabPage.Text);
-        }
-
+        
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //TODO: Add save to current file if exist or call savedialog
@@ -178,6 +171,44 @@ namespace WebSqlLang
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveFileDialog1.ShowDialog();
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.CheckFileExists = true;
+            openFileDialog1.DefaultExt = "wslang";
+            openFileDialog1.Filter = @"All|*|Web Sql Language|*.wslang";
+            openFileDialog1.Multiselect = false;
+            openFileDialog1.FileName = "*";
+            openFileDialog1.ShowDialog();
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            var name = openFileDialog1.FileName;
+            var content = File.ReadAllText(name);
+
+            //Create new tab on file open
+            var newTabPage = new TabPage {Text = openFileDialog1.SafeFileName, Name = openFileDialog1.SafeFileName};
+            var box = new TextBox
+            {
+                Multiline = true,
+                Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0))),
+                Text = content
+            };
+            newTabPage.Controls.Add(box);
+            mainInputTabControl.Controls.Add(newTabPage);
+            box.Height = box.Parent.Bottom;
+            box.Width = box.Parent.Width;
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            //https://www.dotnetperls.com/savefiledialog
+
+            var name = saveFileDialog1.FileName;
+            var box = mainInputTabControl.SelectedTab.Controls[0] as TextBox;
+            File.WriteAllText(name, box?.Text);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace WebSqlLang
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Node0");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Node0");
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,6 +55,7 @@ namespace WebSqlLang
             this.mainInputTabControl = new System.Windows.Forms.TabControl();
             this.baseInputTabPage = new System.Windows.Forms.TabPage();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.mainInputTabControl.SuspendLayout();
@@ -93,6 +94,7 @@ namespace WebSqlLang
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadToolStripMenuItem.Text = "Load";
+            this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
@@ -179,10 +181,10 @@ namespace WebSqlLang
             // 
             this.treeView1.Location = new System.Drawing.Point(0, 46);
             this.treeView1.Name = "treeView1";
-            treeNode1.Name = "Node0";
-            treeNode1.Text = "Node0";
+            treeNode5.Name = "Node0";
+            treeNode5.Text = "Node0";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode5});
             this.treeView1.Size = new System.Drawing.Size(205, 334);
             this.treeView1.TabIndex = 4;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -262,6 +264,12 @@ namespace WebSqlLang
             this.saveFileDialog1.DefaultExt = "wslang";
             this.saveFileDialog1.FileName = "*";
             this.saveFileDialog1.Filter = "All|*|Web Sql Language|*.wslang";
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
             // MainWindow
             // 
@@ -312,6 +320,7 @@ namespace WebSqlLang
         private System.Windows.Forms.TabControl mainInputTabControl;
         private System.Windows.Forms.TabPage baseInputTabPage;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
