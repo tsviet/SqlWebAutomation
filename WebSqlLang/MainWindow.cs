@@ -18,7 +18,7 @@ namespace WebSqlLang
 {
     public partial class MainWindow : Form
     {
-
+        private string currentDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         public List<IData> DataCollected = null;
 
         public MainWindow()
@@ -37,6 +37,7 @@ namespace WebSqlLang
 
             box.Height = box.Parent.Bottom;
             box.Width = box.Parent.Width;
+
         }
 
         private void csvToolStripMenuItem_Click(object sender, EventArgs e)
@@ -169,8 +170,7 @@ namespace WebSqlLang
 
         private void SaveCurrentWindow()
         {
-            var dir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            var fileName = dir + "\\" + mainInputTabControl.SelectedTab.Text;
+            var fileName = currentDir + "\\" + mainInputTabControl.SelectedTab.Text;
             if (File.Exists(fileName))
             {
                 File.WriteAllText(fileName, mainInputTabControl.SelectedTab.Controls[0].Text);

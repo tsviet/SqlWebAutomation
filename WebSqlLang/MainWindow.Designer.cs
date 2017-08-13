@@ -29,7 +29,6 @@ namespace WebSqlLang
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Node0");
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,7 +45,6 @@ namespace WebSqlLang
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.docsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.treeView1 = new System.Windows.Forms.TreeView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -92,14 +90,14 @@ namespace WebSqlLang
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
@@ -113,7 +111,7 @@ namespace WebSqlLang
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.saveAsToolStripMenuItem.Text = "Save as ...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -178,18 +176,6 @@ namespace WebSqlLang
             this.docsToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
             this.docsToolStripMenuItem.Text = "docs";
             // 
-            // treeView1
-            // 
-            this.treeView1.Location = new System.Drawing.Point(0, 46);
-            this.treeView1.Name = "treeView1";
-            treeNode3.Name = "Node0";
-            treeNode3.Text = "Node0";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
-            this.treeView1.Size = new System.Drawing.Size(205, 334);
-            this.treeView1.TabIndex = 4;
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 729);
@@ -230,9 +216,9 @@ namespace WebSqlLang
             // 
             this.button1.Image = global::WebSqlLang.Properties.Resources.start_24;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(211, 22);
+            this.button1.Location = new System.Drawing.Point(4, 27);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(107, 23);
             this.button1.TabIndex = 7;
             this.button1.Text = "Run";
             this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -244,11 +230,11 @@ namespace WebSqlLang
             this.mainInputTabControl.Controls.Add(this.baseInputTabPage);
             this.mainInputTabControl.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.mainInputTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mainInputTabControl.Location = new System.Drawing.Point(211, 46);
+            this.mainInputTabControl.Location = new System.Drawing.Point(0, 56);
             this.mainInputTabControl.Name = "mainInputTabControl";
             this.mainInputTabControl.Padding = new System.Drawing.Point(21, 3);
             this.mainInputTabControl.SelectedIndex = 0;
-            this.mainInputTabControl.Size = new System.Drawing.Size(1168, 336);
+            this.mainInputTabControl.Size = new System.Drawing.Size(1379, 326);
             this.mainInputTabControl.TabIndex = 8;
             this.mainInputTabControl.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.mainInputTabControl_DrawItem);
             this.mainInputTabControl.KeyDown += new System.Windows.Forms.KeyEventHandler(this.mainInputTabControl_KeyDown);
@@ -260,7 +246,7 @@ namespace WebSqlLang
             this.baseInputTabPage.Location = new System.Drawing.Point(4, 29);
             this.baseInputTabPage.Name = "baseInputTabPage";
             this.baseInputTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.baseInputTabPage.Size = new System.Drawing.Size(1160, 303);
+            this.baseInputTabPage.Size = new System.Drawing.Size(1371, 293);
             this.baseInputTabPage.TabIndex = 0;
             this.baseInputTabPage.Text = "Program1";
             this.baseInputTabPage.UseVisualStyleBackColor = true;
@@ -286,7 +272,6 @@ namespace WebSqlLang
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.treeView1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
@@ -317,7 +302,6 @@ namespace WebSqlLang
         private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem docsToolStripMenuItem;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;

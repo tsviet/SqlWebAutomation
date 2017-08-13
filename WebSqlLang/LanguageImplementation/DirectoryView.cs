@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace WebSqlLang.LanguageImplementation
 {
-    public class Directory
+    public class DirectoryView
     {
         // From https://stackoverflow.com/questions/6239544/populate-treeview-with-file-system-directory-structure
 
-        private void ListDirectory(TreeView treeView, string path)
+        public void ListDirectory(TreeView treeView, string path)
         {
             treeView.Nodes.Clear();
             var rootDirectoryInfo = new DirectoryInfo(path);
@@ -24,7 +24,7 @@ namespace WebSqlLang.LanguageImplementation
         {
             var directoryNode = new TreeNode(directoryInfo.Name);
             foreach (var directory in directoryInfo.GetDirectories())
-                directoryNode.Nodes.Add(CreateDirectoryNode(directory));
+                directoryNode.Nodes.Add(directory.Name);
             foreach (var file in directoryInfo.GetFiles())
                 directoryNode.Nodes.Add(new TreeNode(file.Name));
             return directoryNode;
