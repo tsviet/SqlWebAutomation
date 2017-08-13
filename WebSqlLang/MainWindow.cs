@@ -164,8 +164,21 @@ namespace WebSqlLang
         
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO: Add save to current file if exist or call savedialog
-            
+            SaveCurrentWindow();
+        }
+
+        private void SaveCurrentWindow()
+        {
+            var dir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var fileName = dir + "\\" + mainInputTabControl.SelectedTab.Text;
+            if (File.Exists(fileName))
+            {
+                File.WriteAllText(fileName, mainInputTabControl.SelectedTab.Controls[0].Text);
+            }
+            else
+            {
+                saveFileDialog1.ShowDialog();
+            }
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -209,6 +222,52 @@ namespace WebSqlLang
             var name = saveFileDialog1.FileName;
             var box = mainInputTabControl.SelectedTab.Controls[0] as TextBox;
             File.WriteAllText(name, box?.Text);
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var newTabPage = new TabPage();
+            var box = new TextBox
+            {
+                Multiline = true,
+                Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)))
+            };
+            newTabPage.Controls.Add(box);
+            mainInputTabControl.Controls.Add(newTabPage);
+            newTabPage.Text = $@"Program_{mainInputTabControl.Controls.Count}";
+            box.Height = box.Parent.Bottom;
+            box.Width = box.Parent.Width;
+        }
+
+        private void mainInputTabControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            //https://stackoverflow.com/questions/3183352/close-button-in-tabcontrol
+            Rectangle r = mainInputTabControl.GetTabRect(this.mainInputTabControl.SelectedIndex);
+            Rectangle closeButton = new Rectangle(r.Right - 15, r.Top + 2, 15, 15);
+            if (closeButton.Contains(e.Location))
+            {
+                this.mainInputTabControl.TabPages.Remove(this.mainInputTabControl.SelectedTab);
+            }
+        }
+
+        private void mainInputTabControl_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            //This code will render a "x" mark at the end of the Tab caption. 
+            e.Graphics.DrawString("x", e.Font, Brushes.Black, e.Bounds.Right - 15, e.Bounds.Top + 2);
+            e.Graphics.DrawString(this.mainInputTabControl.TabPages[e.Index].Text, e.Font, Brushes.Black, e.Bounds.Left + 12, e.Bounds.Top + 2);
+            e.DrawFocusRectangle();
+        }
+
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+        }
+
+        private void mainInputTabControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                SaveCurrentWindow();
+            }
         }
     }
 }
