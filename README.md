@@ -3,7 +3,8 @@
 ### Contact information: tsviet@pdx.edu / mtsvetukhin@gmail.com For any suggestion or contribution contact me. 
 
 # WebSqlLang
-<p> This project is here to create free alternative for a web parser / automation tool for people that doesn't know any programming languages but can wrote SQL querys for their databases or for any other reason. <BR> SQL languages are simple to use and easy to learn for majority of people. The goal is to create an up that gets some SQL query as input and result in a table, csv or JSON output to window or file. </p>
+<p> This project is here to create a free alternative for a web parser/automation tool for people that don't know any programming languages but can write SQL queries for their databases or for any other reason. 
+SQL languages are simple to use and easy to learn for the majority of people. The goal is to create an up that gets some SQL query as input and result in a table, CSV or JSON output to window or file. </p>
 
 ### Week 3 Report.
 
