@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using WebSqlLang.LanguageImplementation;
 
 namespace WebSqlLang
@@ -294,6 +295,11 @@ namespace WebSqlLang
 
         private void menuStrip1_KeyDown(object sender, KeyEventArgs e)
         {
+        }
+
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/tsviet/WebSqlLang/blob/master/LICENSE");
         }
     }
 }

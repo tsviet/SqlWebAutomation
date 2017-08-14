@@ -1,6 +1,7 @@
 ﻿/* Copyright © 2017 Mykhailo Tsvietukhin. This program is released under the "GPL-3.0" lisense. Please see LICENSE for license terms. */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -222,27 +223,53 @@ namespace WebSqlLang.LanguageImplementation
                     {
                         foreach (var d in w.Data)
                         {
-                            foreach (PropertyDescriptor prop in properties)
-                            {
-                                if (string.Equals(d.Name, prop.Name, StringComparison.CurrentCultureIgnoreCase))
-                                {
-                                    if (d.Operator == "contains")
-                                    {
-                                        data = data?.Where(x =>
-                                        {
-                                            var value = prop.GetValue(x);
-                                            return value != null && value.ToString().ToLower().Contains(d.Value.ToLower());
-                                        }).ToList();
-                                    }
-                                }
-                            }
+                            data = ApplyFilter(data, properties, d);
                         }
                     }
-                    //TODO: Add or and none logic 
+                    //Add logic when "or" provided
+                    else if (w.Seperator.Trim() == "or")
+                    {
+                        foreach (var d in w.Data)
+                        {
+                            data = ApplyFilter(data, properties, d);
+                        }
+                    }
+                    else
+                    {
+                        data = ApplyFilter(data, properties, w.Data.FirstOrDefault());
+                    }
                 }
 
             }
 
+            return data;
+        }
+
+        private static IList<T> ApplyFilter<T>(IList<T> data, PropertyDescriptorCollection properties, Limits d)
+        {
+            foreach (PropertyDescriptor prop in properties)
+            {
+                //Skip not matching cases
+                if (d.Name.ToLower() != prop.Name.ToLower()) continue;
+
+                if (d.Operator == "contains")
+                {
+                    data = data?.Where(x =>
+                    {
+                        var value = prop.GetValue(x);
+                        return value != null && value.ToString().ToLower().Contains(d.Value.ToLower());
+                    }).ToList();
+                }
+
+                if (d.Operator == "==")
+                {
+                    data = data?.Where(x =>
+                    {
+                        var value = prop.GetValue(x);
+                        return value != null && value.ToString().ToLower() == d.Value.ToLower();
+                    }).ToList();
+                }
+            }
             return data;
         }
     }
