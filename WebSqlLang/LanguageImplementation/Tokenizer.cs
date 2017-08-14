@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -33,6 +34,9 @@ namespace WebSqlLang.LanguageImplementation
             if (container.Errors.Count > 0) return container;
             GetUrlFromString(formInput, container);
 
+            if (container.Errors.Count > 0) return container;
+            GetWhereFromString(formInput, container);
+
             //Fill Column map with method and columns
             container.ColumnsMap.Add(parsedMethod, parsedColumnList);
 
@@ -52,6 +56,13 @@ namespace WebSqlLang.LanguageImplementation
             {
                 container.Url = urlString;
             }
+        }
+
+        private static void GetWhereFromString(string formInput, InputContainer container)
+        {
+            //Parse where
+            var where = Regex.Match(formInput, "(?is)where\\s+(.+?)(\\s+$)?$").Groups[1].Value;
+            container.Where = where;
         }
 
         private static void GetMethodFromString(string formInput, InputContainer container, ref string parsedMethod)
@@ -106,6 +117,133 @@ namespace WebSqlLang.LanguageImplementation
             if (!formInput.ToUpper().Contains("HTTP")) return false;
 
             return true;
+        }
+
+        public static List<Where> ParseWhere(string where)
+        {
+            var res = new List<Where>();
+            var and = new string[1] {" and "};
+            var or = new string[1] { " or " };
+            var none = new string[1] { " none " };
+            //Remove redundant spaces or new lines
+            where = Regex.Replace(where, "\\s\\s+", "");
+            
+            if (where.ToLower().Contains(" and "))
+            {
+                res.Add(GetWhereObject(where, and));
+            }
+            if (where.ToLower().Contains(" or "))
+            {
+                res.Add(GetWhereObject(where, or));
+            }
+
+            res.Add(GetWhereObject(where, none));
+
+            return res;
+        }
+
+        private static Where GetWhereObject(string where, string[] and)
+        {
+            var w1 = new Where
+            {
+                Seperator = and[0],
+                Data = new List<Limits>()
+            };
+            var whereArray = where.Split(and, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var str in whereArray)
+            {
+                var has = new string[1] {" contains "};
+                var greater = new string[1] {" > "};
+                var greaterEqual = new string[1] {" >= "};
+                var less = new string[1] {" < "};
+                var lessEqual = new string[1] {" =< "};
+                var equal = new string[1] {" == "};
+                var regMatch = new string[1] {" regex "};
+
+                var lim = new Limits();
+                if (str.Contains(has[0]))
+                {
+                    lim = SetLimits(str, has[0]); 
+                }
+                else if (str.Contains(greater[0]))
+                {
+                    lim = SetLimits(str, greater[0]);
+                }
+                else if (str.Contains(greaterEqual[0]))
+                {
+                    lim = SetLimits(str, greaterEqual[0]);
+                }
+                else if (str.Contains(less[0]))
+                {
+                    lim = SetLimits(str, less[0]);
+                }
+                else if (str.Contains(lessEqual[0]))
+                {
+                    lim = SetLimits(str, lessEqual[0]);
+                }
+                else if (str.Contains(equal[0]))
+                {
+                    lim = SetLimits(str, equal[0]);
+                }
+                else if (str.Contains(regMatch[0]))
+                {
+                    lim = SetLimits(str, regMatch[0]);
+                }
+
+                if (!string.IsNullOrEmpty(lim?.Name))
+                {
+                    w1.Data.Add(lim);
+                }
+            }
+            return w1;
+        }
+
+        private static Limits SetLimits(string str, string s)
+        {
+            var limits = new Limits();
+            var res = Regex.Matches(str, $@"(?is)^\s*(\w+){s}""(.+?)""");
+            if (res.Count <= 0) return limits;
+            limits.Name = res[0].Groups[1].Value;
+            limits.Operator = s.Trim();
+            limits.Value = res[0].Groups[2].Value;
+            return limits;
+        }
+
+        public static IList<T> FilterDataArray<T>(IList<T> data, List<Where> where)
+        {
+            //var finalList = new List<IData>();
+            var properties = TypeDescriptor.GetProperties(typeof(T));
+
+            if (where != null && where.Count > 0)
+            {
+                foreach (var w in where)
+                {
+                    if (w.Seperator.Trim() == "and")
+                    {
+                        foreach (var d in w.Data)
+                        {
+                            foreach (PropertyDescriptor prop in properties)
+                            {
+                                if (string.Equals(d.Name, prop.Name, StringComparison.CurrentCultureIgnoreCase))
+                                {
+                                    if (d.Operator == "contains")
+                                    {
+                                        data = data?.Where(x =>
+                                        {
+                                            var value = prop.GetValue(x);
+                                            return value != null && value.ToString().ToLower().Contains(d.Value.ToLower());
+                                        }).ToList();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //TODO: Add or and none logic 
+                }
+
+            }
+
+            return data;
         }
     }
 }

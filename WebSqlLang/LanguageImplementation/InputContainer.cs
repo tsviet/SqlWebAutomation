@@ -20,6 +20,7 @@ namespace WebSqlLang.LanguageImplementation
         public string Url { get; set; }
         public Dictionary<string, List<string>> ColumnsMap { get; set; }
         public List<string> Errors { get; set; }
+        public string Where { get; set; }
 
     }
 }

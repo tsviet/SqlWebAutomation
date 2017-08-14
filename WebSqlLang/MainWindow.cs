@@ -30,23 +30,14 @@ namespace WebSqlLang
             {
                 Multiline = true,
                 Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, ((byte) (0))),
-                Text = @"SELECT [URL, NAME] using LINKS FROM https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page"
+                Text = @"SELECT [URL, NAME] using LINKS FROM https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page" +
+                " WHERE name contains \"Users\" and Url contains \"Stack\""
             };
 
             mainInputTabControl.TabPages[0].Controls.Add(box);
 
             box.Height = box.Parent.Bottom;
             box.Width = box.Parent.Width;
-
-        }
-
-        private void csvToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
 
         }
 
@@ -144,16 +135,24 @@ namespace WebSqlLang
 
         }
 
+        
         private void UpdateTableAndGrid(List<IData> finalData, InputContainer container, DataGridView grid)
         {
+
+            var where = Tokenizer.ParseWhere(container.Where);
+
             try
             {
                 var convertedList = finalData.ConvertAll(x => (Links) x);
-                var resultTable = ConvertToDataTable(convertedList, container);
+
+                var res = Tokenizer.FilterDataArray(convertedList, where);
+                var resultTable = ConvertToDataTable(res, container);
 
                 grid.DataSource = resultTable;
                 tabControl1.TabPages[0].VerticalScroll.Enabled = true;
                 tabControl1.TabPages[0].Controls.Add(grid);
+                grid.Width = grid.Parent.Width;
+                grid.Height = grid.Parent.Bottom;
                 tabControl1.Refresh();
             }
             catch (Exception)
@@ -162,11 +161,6 @@ namespace WebSqlLang
             }
         }
 
-        private void textBox1_TextChanged_1(object sender, EventArgs e)
-        {
-
-        }
-        
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveCurrentWindow();

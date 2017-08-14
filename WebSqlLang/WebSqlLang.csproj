@@ -58,6 +58,7 @@
     <Compile Include="LanguageImplementation\Links.cs" />
     <Compile Include="LanguageImplementation\Tables.cs" />
     <Compile Include="LanguageImplementation\WebRequest.cs" />
+    <Compile Include="LanguageImplementation\Where.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
