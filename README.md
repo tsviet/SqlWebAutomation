@@ -40,11 +40,10 @@ SELECT [URL, NAME] using LINKS FROM http://google.com
 ```
 ## Output 1:
 
-```
-URL             NAME
-goolge.com      goolge
+![alt text](https://github.com/tsviet/WebSqlLang/blob/master/images/example2_output.png)
 
-```
+## This was intended view that I started with...
+
 ## MockUpUI:
 
 ![alt text](https://github.com/tsviet/WebSqlLang/blob/master/MockupUI.png)
