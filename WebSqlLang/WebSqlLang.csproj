@@ -100,12 +100,17 @@
   <ItemGroup>
     <None Include="Resources\start-24.ico" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <None Include="Resources\License.bmp" />
-  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\License.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\information-button-icon-23_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

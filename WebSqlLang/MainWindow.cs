@@ -35,7 +35,10 @@ namespace WebSqlLang
             };
 
             mainInputTabControl.TabPages[0].Controls.Add(box);
-
+            mainInputTabControl.Width = mainInputTabControl.Parent.Width - 20;
+            mainInputTabControl.Height = mainInputTabControl.Parent.Bottom / 2 - 70;
+            tabControl1.Width = tabControl1.Parent.Width - 20;
+            tabControl1.Height = tabControl1.Parent.Bottom / 2 - 30;
             box.Height = box.Parent.Bottom;
             box.Width = box.Parent.Width;
 
@@ -104,64 +107,24 @@ namespace WebSqlLang
             }
         }
 
-        public DataTable ConvertToDataTable<T>(IList<T> data, InputContainer container)
-        {
-            //https://stackoverflow.com/questions/29898412/convert-listt-to-datatable-including-t-customclass-properties
-            var properties = TypeDescriptor.GetProperties(typeof(T));
-            var outputTable = new DataTable();
-            if (container.ColumnsMap.FirstOrDefault().Value.Contains("*"))
-            {
-                foreach (PropertyDescriptor prop in properties)
-                {
-                    outputTable.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-                }
-            }
-            foreach (PropertyDescriptor prop in properties)
-            {
-                //Will work only for sinle method in query will need to be rebuilded when JOIN will be designed
-                if (container.ColumnsMap.FirstOrDefault().Value.Contains(prop.Name.ToLower()))
-                {
-                    var name = prop.Name;
-                    if (outputTable.Columns.Contains(prop.Name))
-                    {
-                        name = prop.Name + "_1";
-                    }
-                    outputTable.Columns.Add(name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
-                }
-            }
-
-            foreach (var item in data)
-            {
-                var row = outputTable.NewRow();
-                foreach (DataColumn column in outputTable.Columns)
-                {
-                    var prop = properties.Find(column.ColumnName.Replace("_1", ""), false);
-                    row[column.ColumnName] = prop.GetValue(item) ?? DBNull.Value;
-                }
-                outputTable.Rows.Add(row);
-            }
-            return outputTable;
-
-        }
-
         
         private void UpdateTableAndGrid(List<IData> finalData, InputContainer container, DataGridView grid)
         {
 
-            var where = Tokenizer.ParseWhere(container.Where);
+            var where = !string.IsNullOrWhiteSpace(container.Where) ? Tokenizer.ParseWhere(container.Where) : new List<Where>();
 
             try
             {
                 var resultTable = new DataTable();
                 if (container.ColumnsMap.FirstOrDefault().Key.ToLower() == "links")
                 {
-                    var res = Tokenizer.FilterDataArray(finalData.ConvertAll(x => (Links)x), where);
-                    resultTable = ConvertToDataTable(res, container);
+                    var res = where.Count > 0 ? Tokenizer.FilterDataArray(finalData.ConvertAll(x => (Links)x), where) : finalData.ConvertAll(x => (Links)x);
+                    resultTable = HtmlHelper.ConvertToDataTable(res, container);
                 }
                 if (container.ColumnsMap.FirstOrDefault().Key.ToLower() == "headers")
                 {
-                    var res = Tokenizer.FilterDataArray(finalData.ConvertAll(x => (Headers)x), where);
-                    resultTable = ConvertToDataTable(res, container);
+                    var res = where.Count > 0 ? Tokenizer.FilterDataArray(finalData.ConvertAll(x => (Headers)x), where) : finalData.ConvertAll(x => (Headers)x);
+                    resultTable = HtmlHelper.ConvertToDataTable(res, container);
                 }
 
                 grid.DataSource = resultTable;
@@ -175,11 +138,6 @@ namespace WebSqlLang
             {
                 container.Errors.Add("Current method provided doesn't exist!");
             }
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveCurrentWindow();
         }
 
         private void SaveCurrentWindow()
@@ -197,7 +155,7 @@ namespace WebSqlLang
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            saveFileDialog1.ShowDialog();
+            
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -240,17 +198,7 @@ namespace WebSqlLang
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var newTabPage = new TabPage();
-            var box = new TextBox
-            {
-                Multiline = true,
-                Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)))
-            };
-            newTabPage.Controls.Add(box);
-            mainInputTabControl.Controls.Add(newTabPage);
-            newTabPage.Text = $@"Program_{mainInputTabControl.Controls.Count}";
-            box.Height = box.Parent.Bottom;
-            box.Width = box.Parent.Width;
+            
         }
 
         private void mainInputTabControl_MouseDown(object sender, MouseEventArgs e)
@@ -288,18 +236,36 @@ namespace WebSqlLang
             }
         }
 
-        private void runToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-            Run();
+            var newTabPage = new TabPage();
+            var box = new TextBox
+            {
+                Multiline = true,
+                Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)))
+            };
+            newTabPage.Controls.Add(box);
+            mainInputTabControl.Controls.Add(newTabPage);
+            mainInputTabControl.SelectedTab = newTabPage;
+            newTabPage.Text = $@"Program_{mainInputTabControl.Controls.Count}";
+            
+            box.Height = box.Parent.Bottom;
+            box.Width = box.Parent.Width;
         }
 
-        private void menuStrip1_KeyDown(object sender, KeyEventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
+            SaveCurrentWindow();
         }
 
-        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/tsviet/WebSqlLang/blob/master/LICENSE");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.ShowDialog();
         }
     }
 }

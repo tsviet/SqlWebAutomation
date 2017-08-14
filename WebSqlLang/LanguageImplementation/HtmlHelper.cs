@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -91,6 +93,46 @@ namespace WebSqlLang.LanguageImplementation
                 list.Add(obj);
             }
             return list;
+        }
+
+        public static DataTable ConvertToDataTable<T>(IList<T> data, InputContainer container)
+        {
+            //https://stackoverflow.com/questions/29898412/convert-listt-to-datatable-including-t-customclass-properties
+            var properties = TypeDescriptor.GetProperties(typeof(T));
+            var outputTable = new DataTable();
+            if (container.ColumnsMap.FirstOrDefault().Value.Contains("*"))
+            {
+                foreach (PropertyDescriptor prop in properties)
+                {
+                    outputTable.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                }
+            }
+            foreach (PropertyDescriptor prop in properties)
+            {
+                //Will work only for sinle method in query will need to be rebuilded when JOIN will be designed
+                if (container.ColumnsMap.FirstOrDefault().Value.Contains(prop.Name.ToLower()))
+                {
+                    var name = prop.Name;
+                    if (outputTable.Columns.Contains(prop.Name))
+                    {
+                        name = prop.Name + "_1";
+                    }
+                    outputTable.Columns.Add(name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                }
+            }
+
+            foreach (var item in data)
+            {
+                var row = outputTable.NewRow();
+                foreach (DataColumn column in outputTable.Columns)
+                {
+                    var prop = properties.Find(column.ColumnName.Replace("_1", ""), false);
+                    row[column.ColumnName] = prop.GetValue(item) ?? DBNull.Value;
+                }
+                outputTable.Rows.Add(row);
+            }
+            return outputTable;
+
         }
     }
 
