@@ -20,15 +20,15 @@
 
 ```
 
-SELECT [ALL] using HEADERS FROM http://google.com 
+SELECT * 
+using HEADERS 
+FROM http://google.com 
 
 ```
 ## Output 1:
 
 ```
-NAME            VALUE
-host            google.com
-cookie          ""
+![alt text](https://github.com/tsviet/WebSqlLang/blob/master/output1.png)
 
 ```
 ## Example 2:
