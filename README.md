@@ -6,11 +6,6 @@
 <p> This project is here to create a free alternative for a web parser/automation tool for people that don't know any programming languages but can write SQL queries for their databases or for any other reason. 
 SQL languages are simple to use and easy to learn for the majority of people. The goal is to create an up that gets some SQL query as input and result in a table, CSV or JSON output to window or file. </p>
 
-### Week 3 Report.
-
-<p>For last 3 weeks I decided a platform and project. Created Mockup of the UI and working on ideas for future realization. Starting learning of method of creation on my own leanguage. Started working on backend implementation. I find out that I need to schedule a specific time to work on a project during the day to be more organized. Next week I plan to work on a UI to make some buttons to work and continue to work on back end to test project from simple recieveing headers to making more interesting things. </p>
-
-
 ### PLATFORM: WINDOWS / LINUX / MONO * (http://www.mono-project.com/)
 ### Language: C# .NET
 ### IDE: Visual Studio / Rider * (https://www.jetbrains.com/rider/)
@@ -50,3 +45,7 @@ FROM http://google.com
 ## MockUpUI:
 
 ![alt text](https://github.com/tsviet/WebSqlLang/blob/master/MockupUI.png)
+
+### Week 3 Report.
+
+<p>For last 3 weeks I decided a platform and project. Created Mockup of the UI and working on ideas for future realization. Starting learning of method of creation on my own leanguage. Started working on backend implementation. I find out that I need to schedule a specific time to work on a project during the day to be more organized. Next week I plan to work on a UI to make some buttons to work and continue to work on back end to test project from simple recieveing headers to making more interesting things. </p>
