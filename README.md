@@ -10,6 +10,13 @@ SQL languages are simple to use and easy to learn for the majority of people. Th
 ### Language: C# .NET
 ### IDE: Visual Studio / Rider * (https://www.jetbrains.com/rider/)
 
+### Build instructions
+
+1. Install Visual Studio 2017 Comunity edition 
+2. Clone project 
+3. Open project 
+4. Start / Build 
+
 ## Example 1:
 
 ### This will gives you all headers of google.com responce
