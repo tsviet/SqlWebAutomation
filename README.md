@@ -27,7 +27,7 @@ FROM http://google.com
 ```
 ## Output 1:
 
-![alt text](https://github.com/tsviet/WebSqlLang/blob/master/images/example1_output.png)
+![alt text](https://github.com/tsviet/WebSqlLang/blob/master/images/example1.png)
 
 ## Example 2:
 
@@ -35,12 +35,14 @@ FROM http://google.com
 
 ```
 
-SELECT [URL, NAME] using LINKS FROM http://google.com 
+SELECT [URL, NAME] 
+using LINKS 
+FROM http://google.com 
 
 ```
 ## Output 1:
 
-![alt text](https://github.com/tsviet/WebSqlLang/blob/master/images/example2_output.png)
+![alt text](https://github.com/tsviet/WebSqlLang/blob/master/images/example2.png)
 
 ## This was intended view that I started with...
 
