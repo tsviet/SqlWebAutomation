@@ -27,10 +27,8 @@ FROM http://google.com
 ```
 ## Output 1:
 
-```
-![alt text](https://github.com/tsviet/WebSqlLang/blob/master/output1.png)
+![alt text](https://github.com/tsviet/WebSqlLang/blob/master/images/example1_output.png)
 
-```
 ## Example 2:
 
 ### This will select 2 columns url and text of <a> tag for all urls found on a page
