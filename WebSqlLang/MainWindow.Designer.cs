@@ -182,6 +182,7 @@ namespace WebSqlLang
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 729);
             this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.statusStrip1.Size = new System.Drawing.Size(1379, 22);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";

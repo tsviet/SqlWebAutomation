@@ -16,18 +16,14 @@ namespace WebSqlLang.LanguageImplementation
         private readonly InputContainer container = null;
         private readonly Uri _inputUrl;
         private string _html = "";
+        private Dictionary<string, string> _dic = new Dictionary<string, string>();
         public string Html {
             get { return _html; }
             private set
             {
                 _html = value;
                 //On value change call parser to get proper data
-
                 OnPropertyChanged("Html");
-                //if (!string.IsNullOrWhiteSpace(value) && !string.IsNullOrEmpty(value))
-                //{
-                //HtmlHelper.Parse(container, value);
-                //}
             }
         }
 
@@ -58,6 +54,21 @@ namespace WebSqlLang.LanguageImplementation
         {
             var handler = PropertyChanged;
             handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public Dictionary<string, string> GetHeaders()
+        {
+            var headers = new Dictionary<string, string>();
+            var webRequest = HttpWebRequest.Create(_inputUrl);
+            webRequest.Method = "HEAD";
+            using (var webResponse = webRequest.GetResponse())
+            {
+                foreach (string header in webResponse.Headers)
+                {
+                    headers.Add(header, webResponse.Headers[header]);
+                }
+            }
+            return headers;
         }
     }
 }

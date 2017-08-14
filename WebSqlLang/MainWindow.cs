@@ -18,7 +18,7 @@ namespace WebSqlLang
 {
     public partial class MainWindow : Form
     {
-        private string currentDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        private string currentDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\WebSqlLang";
         public List<IData> DataCollected = null;
 
         public MainWindow()
@@ -30,8 +30,7 @@ namespace WebSqlLang
             {
                 Multiline = true,
                 Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, ((byte) (0))),
-                Text = @"SELECT [URL, NAME] using LINKS FROM https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page" +
-                " WHERE name contains \"Users\" and Url contains \"Stack\""
+                Text = @"SELECT [NAME, VALUE] using HEADERS FROM https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page WHERE NAME contains ""Set-Cookie""" 
             };
 
             mainInputTabControl.TabPages[0].Controls.Add(box);
@@ -70,7 +69,16 @@ namespace WebSqlLang
             {
                 container = Tokenizer.Parse(programText?.Text);
                 var web = new WebRequest(container);
-                web.GetHtml();
+                if (container.ColumnsMap.FirstOrDefault().Key.ToLower() == "headers")
+                {
+                    var dic = web.GetHeaders();
+                    finalData = HtmlHelper.ConvertToHeaders(container, dic);
+                    UpdateTableAndGrid(finalData, container, grid);
+                }
+                else
+                {
+                    web.GetHtml();
+                }
                 web.PropertyChanged += (sender1, e1) =>
                 {
                     //Some code from here https://stackoverflow.com/questions/13294662/propertychangedeventhandler-how-to-get-value
@@ -143,10 +151,17 @@ namespace WebSqlLang
 
             try
             {
-                var convertedList = finalData.ConvertAll(x => (Links) x);
-
-                var res = Tokenizer.FilterDataArray(convertedList, where);
-                var resultTable = ConvertToDataTable(res, container);
+                var resultTable = new DataTable();
+                if (container.ColumnsMap.FirstOrDefault().Key.ToLower() == "links")
+                {
+                    var res = Tokenizer.FilterDataArray(finalData.ConvertAll(x => (Links)x), where);
+                    resultTable = ConvertToDataTable(res, container);
+                }
+                if (container.ColumnsMap.FirstOrDefault().Key.ToLower() == "headers")
+                {
+                    var res = Tokenizer.FilterDataArray(finalData.ConvertAll(x => (Headers)x), where);
+                    resultTable = ConvertToDataTable(res, container);
+                }
 
                 grid.DataSource = resultTable;
                 tabControl1.TabPages[0].VerticalScroll.Enabled = true;

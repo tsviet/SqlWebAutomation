@@ -9,5 +9,7 @@ namespace WebSqlLang.LanguageImplementation
 {
     public class Headers : IData
     {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

@@ -46,7 +46,7 @@ namespace WebSqlLang.LanguageImplementation
         private static void GetUrlFromString(string formInput, InputContainer container)
         {
             //Parse method name single word 
-            var urlString = Regex.Match(formInput, "(?is)from\\s+(http.+?)(\\s+$)?( where.+?$)?$").Groups[1].Value;
+            var urlString = Regex.Match(formInput, "(?is)from\\s+(http.+?)(\\s+$)?(\\s+where.+?$)?$").Groups[1].Value;
 
             if (string.IsNullOrWhiteSpace(urlString))
             {

@@ -75,6 +75,23 @@ namespace WebSqlLang.LanguageImplementation
                 }
             }
         }
+
+        public static List<IData> ConvertToHeaders(InputContainer container, Dictionary<string, string> headers)
+        {
+            List<IData> list = new List<IData>();
+            if (headers == null) return list;
+
+            foreach (var header in headers)
+            {
+                var obj = new Headers
+                {
+                    Name = header.Key,
+                    Value = header.Value
+                };
+                list.Add(obj);
+            }
+            return list;
+        }
     }
 
 }
