@@ -259,28 +259,28 @@ namespace WebSqlLang.LanguageImplementation
             return data;
         }
 
-        private static IList<T> ApplyFilter<T>(IList<T> data, PropertyDescriptorCollection properties, Limits d)
+        private static IList<T> ApplyFilter<T>(IList<T> data, PropertyDescriptorCollection properties, Limits limit)
         {
             foreach (PropertyDescriptor prop in properties)
             {
                 //Skip not matching cases
-                if (d.Name.ToLower() != prop.Name.ToLower()) continue;
+                if (limit?.Name?.ToLower() != prop.Name.ToLower()) continue;
 
-                if (d.Operator == "contains")
+                if (limit.Operator == "contains")
                 {
                     data = data?.Where(x =>
                     {
                         var value = prop.GetValue(x);
-                        return value != null && value.ToString().ToLower().Contains(d.Value.ToLower());
+                        return value != null && !string.IsNullOrEmpty(limit.Value) && value.ToString().ToLower().Contains(limit.Value.ToLower());
                     }).ToList();
                 }
 
-                if (d.Operator == "==")
+                if (limit.Operator == "==")
                 {
                     data = data?.Where(x =>
                     {
                         var value = prop.GetValue(x);
-                        return value != null && value.ToString().ToLower() == d.Value.ToLower();
+                        return value != null && !string.IsNullOrEmpty(limit.Value) && value.ToString().ToLower() == limit.Value.ToLower();
                     }).ToList();
                 }
             }
