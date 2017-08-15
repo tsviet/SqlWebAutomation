@@ -31,7 +31,7 @@ namespace WebSqlLang
             {
                 Multiline = true,
                 Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Point, ((byte) (0))),
-                Text = @"SELECT [NAME, VALUE] using HEADERS FROM https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page WHERE NAME contains ""Set-Cookie""" 
+                Text = @"SELECT [NAME, VALUE] using HEADERS FROM https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page WHERE NAME contains ""Set-Cookie"" into csv ""test.csv""" 
             };
 
             mainInputTabControl.TabPages[0].Controls.Add(box);
@@ -128,6 +128,22 @@ namespace WebSqlLang
                 }
 
                 grid.DataSource = resultTable;
+                if (container.SaveFormat == "csv")
+                {
+                    //Thanks to vc 74 https://stackoverflow.com/questions/4959722/c-sharp-datatable-to-csv
+                    var sb = new StringBuilder();
+
+                    var columnNames = resultTable.Columns.Cast<DataColumn>().Select(column => column.ColumnName);
+                    sb.AppendLine(string.Join(",", columnNames));
+
+                    foreach (DataRow row in resultTable.Rows)
+                    {
+                        var fields = row.ItemArray.Select(field => field.ToString());
+                        sb.AppendLine(string.Join(",", fields));
+                    }
+
+                    File.WriteAllText(container.SavePath, sb.ToString());
+                }
                 tabControl1.TabPages[0].VerticalScroll.Enabled = true;
                 tabControl1.TabPages[0].Controls.Add(grid);
                 grid.Width = grid.Parent.Width;

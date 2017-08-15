@@ -38,16 +38,19 @@ namespace WebSqlLang.LanguageImplementation
             if (container.Errors.Count > 0) return container;
             GetWhereFromString(formInput, container);
 
+            if (container.Errors.Count > 0) return container;
+            GetSaveInfoFromString(formInput, container);
+
             //Fill Column map with method and columns
             container.ColumnsMap.Add(parsedMethod, parsedColumnList);
 
             return container;
         }
 
-        private static void GetUrlFromString(string formInput, InputContainer container)
+        private static void GetSaveInfoFromString(string formInput, InputContainer container)
         {
             //Parse method name single word 
-            var urlString = Regex.Match(formInput, "(?is)from\\s+(http.+?)(\\s+$)?(\\s+where.+?$)?$").Groups[1].Value;
+            var urlString = Regex.Match(formInput, "(?is)from\\s+(http.+?)(\\s+$)?(\\s+where.+?$)?(\\s+into.+?$)?$").Groups[1].Value;
 
             if (string.IsNullOrWhiteSpace(urlString))
             {
@@ -59,10 +62,21 @@ namespace WebSqlLang.LanguageImplementation
             }
         }
 
+        private static void GetUrlFromString(string formInput, InputContainer container)
+        {
+            //Parse optional save options
+            var saveInfo = Regex.Matches(formInput, "(?is)\\s+into\\s+(\\w+)\\s+\"(.+?)\"(\\s+$)?$");
+            if (saveInfo.Count > 0)
+            {
+                container.SaveFormat = saveInfo[0].Groups[1].Value;
+                container.SavePath = saveInfo[0].Groups[2].Value;
+            }
+        }
+
         private static void GetWhereFromString(string formInput, InputContainer container)
         {
             //Parse where
-            var where = Regex.Match(formInput, "(?is)where\\s+(.+?)(\\s+$)?$").Groups[1].Value;
+            var where = Regex.Match(formInput, "(?is)where\\s+(.+?)(\\s+$)?(\\s+into.+?$)?$").Groups[1].Value;
             container.Where = where;
         }
 

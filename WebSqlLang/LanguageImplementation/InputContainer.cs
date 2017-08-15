@@ -21,6 +21,8 @@ namespace WebSqlLang.LanguageImplementation
         public Dictionary<string, List<string>> ColumnsMap { get; set; }
         public List<string> Errors { get; set; }
         public string Where { get; set; }
+        public string SaveFormat { get; set; }
+        public string SavePath { get; set; }
 
     }
 }
