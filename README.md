@@ -6,13 +6,13 @@
 <p> This project is here to create a free alternative for a web parser/automation tool for people that don't know any programming languages but can write SQL queries for their databases or for any other reason. 
 SQL languages are simple to use and easy to learn for the majority of people. The goal is to create an up that gets some SQL query as input and result in a table, CSV or JSON output to window or file. </p>
 
-### PLATFORM: WINDOWS / LINUX / MONO * (http://www.mono-project.com/)
+### PLATFORM: WINDOWS / LINUX (will wait untill .Net Core 2.0 will be released Fall 2017)
 ### Language: C# .NET
-### IDE: Visual Studio / Rider * (https://www.jetbrains.com/rider/)
+### IDE: Visual Studio / Rider * (https://www.jetbrains.com/rider/) (wait for 2017.2 version before use it. Fall 2017)
 
 ### Build instructions
 
-1. Install Visual Studio 2017 Comunity edition 
+1. Install Visual Studio 2017 Comunity edition (Windows)
 2. Clone project 
 3. Open project 
 4. Start / Build 
