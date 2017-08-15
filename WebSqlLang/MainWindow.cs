@@ -153,21 +153,6 @@ namespace WebSqlLang
             }
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            openFileDialog1.CheckFileExists = true;
-            openFileDialog1.DefaultExt = "wslang";
-            openFileDialog1.Filter = @"All|*|Web Sql Language|*.wslang";
-            openFileDialog1.Multiselect = false;
-            openFileDialog1.FileName = "*";
-            openFileDialog1.ShowDialog();
-        }
-
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             var name = openFileDialog1.FileName;
@@ -183,6 +168,7 @@ namespace WebSqlLang
             };
             newTabPage.Controls.Add(box);
             mainInputTabControl.Controls.Add(newTabPage);
+            mainInputTabControl.SelectedTab = newTabPage;
             box.Height = box.Parent.Bottom;
             box.Width = box.Parent.Width;
         }
@@ -194,11 +180,6 @@ namespace WebSqlLang
             var name = saveFileDialog1.FileName;
             var box = mainInputTabControl.SelectedTab.Controls[0] as TextBox;
             File.WriteAllText(name, box?.Text);
-        }
-
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void mainInputTabControl_MouseDown(object sender, MouseEventArgs e)
@@ -260,12 +241,22 @@ namespace WebSqlLang
 
         private void button5_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/tsviet/WebSqlLang/blob/master/LICENSE");
+            Process.Start("https://github.com/tsviet/WebSqlLang/blob/master/LICENSE");
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             saveFileDialog1.ShowDialog();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.CheckFileExists = true;
+            openFileDialog1.DefaultExt = "wslang";
+            openFileDialog1.Filter = @"All|*|Web Sql Language|*.wslang";
+            openFileDialog1.Multiselect = false;
+            openFileDialog1.FileName = "*";
+            openFileDialog1.ShowDialog();
         }
     }
 }
