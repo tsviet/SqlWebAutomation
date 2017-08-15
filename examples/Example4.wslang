@@ -1,0 +1,5 @@
+SELECT [NAME, VALUE] 
+using HEADERS 
+FROM 
+https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page 
+WHERE NAME contains "Set-Cookie" and value contains "prov"

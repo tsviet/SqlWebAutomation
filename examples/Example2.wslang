@@ -1,0 +1,5 @@
+SELECT 
+[URL, NAME] 
+using LINKS 
+FROM https://stackoverflow.com/questions/25688847/html-agility-pack-get-all-urls-on-page 
+WHERE name contains "Users" and Url contains "Stack"
